@@ -1,0 +1,20 @@
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+	name: 'filter',
+	pure: false // Reevaluates pipe every time page data changes (May be costly)
+})
+export class FilterPipe implements PipeTransform {
+	transform(value: any, filterString: any, propName: string): any {
+		if (value.length === 0 || filterString === '') {
+			return value;
+		}
+		const resultArray = [];
+		for (const item of value) {
+			if (item[propName] === filterString) {
+				resultArray.push(item);
+			}
+		}
+		return resultArray;
+	}
+}
